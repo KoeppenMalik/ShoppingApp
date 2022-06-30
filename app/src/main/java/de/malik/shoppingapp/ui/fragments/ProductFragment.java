@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import de.malik.shoppingapp.R;
 import de.malik.shoppingapp.utils.DatabaseManager;
+import de.malik.shoppingapp.utils.FileDataManager;
 import de.malik.shoppingapp.utils.LifecycleManager;
 import de.malik.shoppingapp.utils.Product;
 
@@ -20,20 +21,21 @@ public class ProductFragment extends Fragment {
     private Button mButtonFinish;
     private EditText mEtProduct, mEtDescription;
 
-    private Product mProduct, mOldProduct;
+    private Product mProduct;
     private LifecycleManager mLcm;
     private DatabaseManager dbManager;
+    private FileDataManager fdManager;
 
-    public ProductFragment(Product product, LifecycleManager lcm, DatabaseManager dbManager) {
+    public ProductFragment(Product product, LifecycleManager lcm, DatabaseManager dbManager, FileDataManager fdManager) {
         mProduct = product;
         mLcm = lcm;
         this.dbManager = dbManager;
-        mOldProduct = Product.copy(mProduct);
+        this.fdManager = fdManager;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mLcm.setBackFragment(new ShoppingListFragment(dbManager, mLcm));
+        mLcm.setBackFragment(new ShoppingListFragment(dbManager, mLcm, fdManager));
         mLcm.setBackAnimIn(R.anim.float_up_in);
         mLcm.setBackAnimOut(R.anim.float_up_out);
         mV = inflater.inflate(R.layout.product_layout, container, false);
@@ -55,7 +57,7 @@ public class ProductFragment extends Fragment {
             mProduct.setName(mEtProduct.getText().toString());
             mProduct.setDescription(mEtDescription.getText().toString());
             dbManager.update(mProduct);
-            mLcm.showProgressDialog("Speichern...", 1000, new ShoppingListFragment(dbManager, mLcm));
+            mLcm.showProgressDialog("Speichern...", 1000, new ShoppingListFragment(dbManager, mLcm, fdManager));
         });
     }
 }

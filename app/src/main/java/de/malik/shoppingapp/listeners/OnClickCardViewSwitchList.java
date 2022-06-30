@@ -1,8 +1,8 @@
 package de.malik.shoppingapp.listeners;
 
-import android.util.Log;
 import android.view.View;
 
+import de.malik.shoppingapp.ui.fragments.ShoppingListFragment;
 import de.malik.shoppingapp.utils.DatabaseManager;
 import de.malik.shoppingapp.utils.FileDataManager;
 import de.malik.shoppingapp.utils.LifecycleManager;
@@ -28,5 +28,6 @@ public class OnClickCardViewSwitchList implements View.OnClickListener {
         fdManager.setCurrentRef(mListName);
         fdManager.saveData();
         mLcm.updateAppTitle(mListName);
+        mLcm.showProgressDialog("Daten werden geladen...", 50, new ShoppingListFragment(dbManager, mLcm, fdManager));
     }
 }

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mLcm.updateAppTitle(fdManager.getCurrentRef());
         createComponents();
         setListeners();
-        mLcm.showProgressDialog("Daten werden geladen...", 3000, new ShoppingListFragment(dbManager, mLcm));
+        mLcm.showProgressDialog("Daten werden geladen...", 3000, new ShoppingListFragment(dbManager, mLcm, fdManager));
     }
 
     @Override

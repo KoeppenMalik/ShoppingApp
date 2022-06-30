@@ -28,7 +28,7 @@ public class OnNavBarItemSelected implements NavigationBarView.OnItemSelectedLis
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.tab_list) {
-            mLcm.replaceFragment(new ShoppingListFragment(dbManager, mLcm), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            mLcm.replaceFragment(new ShoppingListFragment(dbManager, mLcm, fdManager), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
         else if (item.getItemId() == R.id.tab_settings) {
             mLcm.replaceFragment(new SettingsFragment(dbManager, mLcm, fdManager), R.anim.slide_in_right, R.anim.slide_out_left);

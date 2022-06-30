@@ -46,8 +46,6 @@ public class DatabaseManager {
 
     public void createNewList(String name) {
         Product placeholder = Product.getInstance(this);
-        placeholder.setName("Head");
-        placeholder.setDescription("Mich nicht löschen");
         mRootRef.child(name).child(CHILD_PATH + placeholder.getId()).setValue(placeholder);
     }
 

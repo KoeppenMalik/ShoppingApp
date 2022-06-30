@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.malik.shoppingapp.R;
 import de.malik.shoppingapp.ui.fragments.ProductFragment;
 import de.malik.shoppingapp.utils.DatabaseManager;
+import de.malik.shoppingapp.utils.FileDataManager;
 import de.malik.shoppingapp.utils.LifecycleManager;
 import de.malik.shoppingapp.utils.Product;
 
@@ -18,10 +19,12 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerViewHo
     private View mV;
 
     private DatabaseManager dbManager;
+    private FileDataManager fdManager;
     private LifecycleManager mLcm;
 
-    public ListRecyclerAdapter(DatabaseManager dbManager, LifecycleManager lcm) {
+    public ListRecyclerAdapter(DatabaseManager dbManager, LifecycleManager lcm, FileDataManager fdManager) {
         this.dbManager = dbManager;
+        this.fdManager = fdManager;
         mLcm = lcm;
     }
 
@@ -39,7 +42,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerViewHo
         holder.getTvProduct().setText(product.getName());
         holder.getTvDescription().setText(product.getDescription());
         mV.setOnClickListener((v) -> {
-            mLcm.replaceFragment(new ProductFragment(product, mLcm, dbManager), R.anim.drop_down_in, R.anim.drop_down_out);
+            mLcm.replaceFragment(new ProductFragment(product, mLcm, dbManager, fdManager), R.anim.drop_down_in, R.anim.drop_down_out);
         });
     }
 

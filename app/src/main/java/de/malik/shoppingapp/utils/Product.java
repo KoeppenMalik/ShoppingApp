@@ -16,10 +16,6 @@ public class Product {
         return new Product(id, "", "");
     }
 
-    public static Product copy(Product product) {
-        return new Product(product.getId(), product.getName(), product.getDescription());
-    }
-
     public String getName() {
         return mName;
     }

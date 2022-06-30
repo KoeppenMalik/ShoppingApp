@@ -47,6 +47,9 @@ public class SettingsFragment extends Fragment {
         mContainer = container;
         mInflater = inflater;
         mV = inflater.inflate(R.layout.settings_layout, container, false);
+        mLcm.setBackFragment(new ShoppingListFragment(dbManager, mLcm, fdManager));
+        mLcm.setBackAnimIn(android.R.anim.slide_in_left);
+        mLcm.setBackAnimOut(android.R.anim.slide_out_right);
         createComponents();
         createLists();
         setListeners();
