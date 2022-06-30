@@ -10,6 +10,6 @@
         android:title="@string/tab_settings_title"
         android:enabled="true"
         android:id="@+id/tab_settings"
-        android:icon="@drawable/ic_settings"/>
+        android:icon="@drawable/ic_overview"/>
 
 </menu>

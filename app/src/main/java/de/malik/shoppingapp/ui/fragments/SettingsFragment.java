@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import de.malik.shoppingapp.R;
 import de.malik.shoppingapp.listeners.OnClickCardViewSwitchList;
 import de.malik.shoppingapp.utils.DatabaseManager;
+import de.malik.shoppingapp.utils.FileDataManager;
 import de.malik.shoppingapp.utils.LifecycleManager;
 
 public class SettingsFragment extends Fragment {
@@ -28,14 +29,16 @@ public class SettingsFragment extends Fragment {
     private View mV;
 
     private DatabaseManager dbManager;
+    private FileDataManager fdManager;
     private LifecycleManager mLcm;
     private ImageButton mButtonDeleteList, mButtonAddList;
     private LinearLayout mListsLayout;
     private LayoutInflater mInflater;
     private ViewGroup mContainer;
 
-    public SettingsFragment(DatabaseManager dbManager, LifecycleManager lcm) {
+    public SettingsFragment(DatabaseManager dbManager, LifecycleManager lcm, FileDataManager fdManager) {
         this.dbManager = dbManager;
+        this.fdManager = fdManager;
         mLcm = lcm;
     }
 
@@ -61,7 +64,7 @@ public class SettingsFragment extends Fragment {
         for (String title : dbManager.getListPaths()) {
             CardView cardView = (CardView) mInflater.inflate(R.layout.list_card_view, mContainer, false);
             ((TextView) cardView.findViewById(R.id.list_title)).setText(title);
-            cardView.setOnClickListener(new OnClickCardViewSwitchList(dbManager, title, mLcm));
+            cardView.setOnClickListener(new OnClickCardViewSwitchList(dbManager, title, mLcm, fdManager));
             mListsLayout.addView(cardView);
         }
     }
@@ -83,7 +86,7 @@ public class SettingsFragment extends Fragment {
                 name.set(etName.getText().toString());
                 CardView cardView = (CardView) mInflater.inflate(R.layout.list_card_view, mContainer, false);
                 ((TextView) cardView.findViewById(R.id.list_title)).setText(name.get());
-                cardView.setOnClickListener(new OnClickCardViewSwitchList(dbManager, name.get(), mLcm));
+                cardView.setOnClickListener(new OnClickCardViewSwitchList(dbManager, name.get(), mLcm, fdManager));
                 mListsLayout.addView(cardView);
                 dbManager.createNewList(name.get());
                 dbManager.switchReference(name.get());
@@ -95,10 +98,14 @@ public class SettingsFragment extends Fragment {
         });
         mButtonDeleteList.setOnClickListener((v) -> {
             removeListFromView(dbManager.getCurrentPath());
+            dbManager.getListPaths().remove(dbManager.getCurrentPath());
             dbManager.removeCurrentList();
-            dbManager.switchReference(dbManager.getListPaths().get(0));
+            if (dbManager.getListPaths().size() == 0)
+                dbManager.switchReference(DatabaseManager.ROOT_PATH);
+            else
+                dbManager.switchReference(dbManager.getListPaths().get(0));
             mLcm.updateAppTitle(dbManager.getCurrentPath());
-            mLcm.showProgressDialog("Anfrage wird bearbeitet...", 1000, new ShoppingListFragment(dbManager, mLcm));
+            mLcm.showProgressDialog("Anfrage wird bearbeitet...", 1000, new SettingsFragment(dbManager, mLcm, fdManager));
         });
     }
 

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">ShoppingApp</string>
     <string name="tab_list_title">Liste</string>
-    <string name="tab_settings_title">Einstellungen</string>
+    <string name="tab_settings_title">Übersicht</string>
     <string name="finish">Fertig</string>
     <string name="product">Produkt</string>
     <string name="product_name">Produktname</string>
     <string name="description">Beschreibung</string>
     <string name="delete_list">Liste löschen</string>
+    <string name="dev_settings">Entwicklereinstellungen</string>
+    <string name="on">An</string>
+    <string name="off">Aus</string>
 </resources>

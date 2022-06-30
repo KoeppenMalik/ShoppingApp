@@ -11,7 +11,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -21,15 +20,19 @@ public class DatabaseManager {
     public static final String ROOT_PATH = "default";
     public static final String CHILD_PATH = "product";
     public static final String SPLIT_REGEX = ";";
+    public static final String DEV_PREFIX = "!";
 
-    private String currentPath = ROOT_PATH;
+    private String currentPath;
     private DatabaseReference mRef, mRootRef;
     private ArrayList<Product> mProducts = new ArrayList<>();
     private ArrayList<String> mListPaths = new ArrayList<>();
     private FirebaseDatabase db;
+    private FileDataManager fdManager;
 
-    public DatabaseManager() {
+    public DatabaseManager(FileDataManager fdManager) {
+        this.fdManager = fdManager;
         db = FirebaseDatabase.getInstance("https://shopping-app-2ceff-default-rtdb.europe-west1.firebasedatabase.app/");
+        currentPath = fdManager.getCurrentRef();
         mRef = db.getReference(currentPath);
         mRootRef = db.getReference();
         readLists();
@@ -43,6 +46,8 @@ public class DatabaseManager {
 
     public void createNewList(String name) {
         Product placeholder = Product.getInstance(this);
+        placeholder.setName("Head");
+        placeholder.setDescription("Mich nicht löschen");
         mRootRef.child(name).child(CHILD_PATH + placeholder.getId()).setValue(placeholder);
     }
 
@@ -51,13 +56,16 @@ public class DatabaseManager {
     }
 
     public void readLists() {
-        mRootRef.addValueEventListener(new ValueEventListener() {
+        mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     HashMap<String, Object> data = (HashMap<String, Object>) snapshot.getValue();
                     mListPaths.clear();
-                    mListPaths.addAll(data.keySet());
+                    for (String key : data.keySet()) {
+                        if ((key.charAt(0) == DEV_PREFIX.charAt(0) && fdManager.isDeveloper()) || key.charAt(0) != DEV_PREFIX.charAt(0))
+                            mListPaths.add(key);
+                    }
                 }
             }
             @Override
@@ -66,7 +74,7 @@ public class DatabaseManager {
     }
 
     public void readDatabase() {
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long startTime = System.nanoTime();
@@ -100,7 +108,7 @@ public class DatabaseManager {
     }
 
     private void applyToDatabase(long id, Product value) {
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mRef.child(CHILD_PATH + id).setValue(value);

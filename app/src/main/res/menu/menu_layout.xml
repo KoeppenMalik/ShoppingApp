@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dev_settings"
+        android:enabled="true"
+        android:title="@string/dev_settings">
+        <menu
+            android:id="@+id/dev_settings_sub"
+            android:enabled="true">
+            <item
+                android:id="@+id/dev_settings_on"
+                android:enabled="true"
+                android:icon="@drawable/ic_dev_settings_on"
+                android:title="@string/on"/>
+            <item
+                android:id="@+id/dev_settings_off"
+                android:enabled="true"
+                android:icon="@drawable/ic_dev_settings_off"
+                android:title="@string/off"/>
+        </menu>
+    </item>
+</menu>
