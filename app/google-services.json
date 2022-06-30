@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "815530935192",
+    "firebase_url": "https://shopping-app-2ceff-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "shopping-app-2ceff",
+    "storage_bucket": "shopping-app-2ceff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815530935192:android:6047987615d1a7f3c361ed",
+        "android_client_info": {
+          "package_name": "de.malik.shoppingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815530935192-18nocbpflfgq04ctgbvtiap352jasafa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFFG3eVyk7a4NJciCFdX8mLkuDhYGNin0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815530935192-18nocbpflfgq04ctgbvtiap352jasafa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
